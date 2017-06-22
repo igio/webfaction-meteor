@@ -1,0 +1,18 @@
+{
+    "local": {
+        "app": "<your-app-folder-name>",
+        "path": "<path-to-your-app-folder-name>"
+
+    },
+    "server": {
+        "app": "<your-app-name>",
+        "remote": "<webfaction-remote-host-name>",
+        "user": "<webfaction-username>",
+        "password": "<webfaction-password>",
+        "port": "<webfaction-port>",
+        "url": "<url-of-the-meteor-app-site>"
+    },
+    "db": {
+        "mongodb": "<uri-of-your-mongodb-database>"
+    }
+}
