@@ -35,15 +35,16 @@ db = settings['db']
 
 ##
 # Steps
-# 1. Build the app
-# 2. Write the startup file
-# 3. Upload both at appropriate locations
-# 4. Unpack
-# 5. Install dependencies
-# 6. Run the application
+#
+# Build the app
+# Upload app at appropriate locations
+# Unpack
+# Install dependencies
+# Generate and upload the startup file
+# Run the application
 ##
 
-# 1. Build the app
+# Build the app
 
 temp_folder = os.path.expanduser('~/%s/%s_build' % (local['path'], local['app']))
 
@@ -55,6 +56,8 @@ if build:
     print('Building application...')
     output = subprocess.check_output(";".join(cmds), shell=True)
     print(output.decode(encoding='utf-8'))
+
+# Connect to server and upload the app built
 
 print('Connecting to the server...')
 conn = paramiko.SSHClient()
@@ -68,6 +71,9 @@ sftp.chdir('webapps/%s' % server['app'])
 print('Start uploading app archive...')
 sftp.put('%s/%s.tar.gz' % (temp_folder, local['app']), '%s.tar.gz' % local['app'])
 print('Upload done!')
+
+# Unpack
+
 print('Extracting archive files...')
 cmds = [
     'cd ~/webapps/%s' % server['app'],
@@ -79,6 +85,8 @@ si, so, se = conn.exec_command(';'.join(cmds))
 print(''.join(so.readlines()))
 print('Files extracted!')
 
+# Install dependencies
+
 print('Installing dependencies...')
 cmds = [
     'cd ~/webapps/%s/bundle/programs/server' % server['app'],
@@ -88,6 +96,8 @@ cmds = [
 si, so, se = conn.exec_command(';'.join(cmds))
 print(''.join(so.readlines()))
 print('Dependencies installed!')
+
+# Generate and upload the startup file
 
 if not update:
     print('Generate startup file...')
@@ -128,6 +138,9 @@ if not update:
     sftp.chdir('webapps/%s/bin' % server['app'])
     sftp.put('%s/start' % temp_folder)
     print('Start file uploaded!')
+
+# Start the application (if everything worked out fine)
+
 print('(re)Starting the app...')
 cmds = [
     '~/webapps/%s/bin/stop' % server['app'],
