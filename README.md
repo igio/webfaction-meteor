@@ -19,7 +19,7 @@ Using the Webfaction console create a `domain` and a `website` record for your M
 
 Optionally, if you need to install mongodb locally, follow [Webfaction's documentation](https://docs.webfaction.com/software/mongodb.html?highlight=mongodb#mongodb). Make note of the username, password, and port for your mongodb installation.
 
-Then create your settings file, in JSON format, with the following structure:
+Then create your application's settings file, in JSON format, with the following structure:
 
 ```
 {
