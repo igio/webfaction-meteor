@@ -125,7 +125,7 @@ if not update:
         print(''.join(se.readlines()))
         exit(1)
     print('Uploading new start file...')
-    sftp.chdir('~/webapps/%s/bin' % server['app'])
+    sftp.chdir('webapps/%s/bin' % server['app'])
     sftp.put('%s/start' % temp_folder)
     print('Start file uploaded!')
 print('(re)Starting the app...')
