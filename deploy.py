@@ -4,6 +4,7 @@ import os
 import subprocess
 import paramiko
 import argparse
+import json
 
 # Manage the command line arguments
 
